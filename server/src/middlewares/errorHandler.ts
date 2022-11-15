@@ -3,8 +3,8 @@ import HttpException from '../lib/HttpException';
 
 const errorHandler = (
   err: Error,
-  _req: Request, 
-  res: Response, 
+  _req: Request,
+  res: Response,
   _next: NextFunction,
 ) => {
   const { status, message } = err as HttpException;

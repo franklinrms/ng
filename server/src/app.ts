@@ -15,8 +15,8 @@ export default class App {
   private config():void {
     this.app.use(cors());
     this.app.use(express.json());
-    
-    this.app.use(errorHandler)
+
+    this.app.use(errorHandler);
   }
 
   public start(PORT: string | number):void {
