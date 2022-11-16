@@ -46,7 +46,7 @@ export default class UserService {
       return encode({ username: user.username, accountId: user.accountId });
     }
   };
-  public getUser = async ({ username, password }: ILoginInput) => {
+  public findUser = async ({ username, password }: ILoginInput) => {
     const user = await this.getUserByUsername(username);
     if (!user) { throw new HttpException(404, 'User not found'); }
 

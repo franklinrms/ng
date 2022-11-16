@@ -13,7 +13,7 @@ export default class MatchController {
     return res.status(201).json(response);
   };
   public findUser = async (req: Request, res: Response) => {
-    const response = await this.service.getUser(req.body);
+    const response = await this.service.findUser(req.body);
     return res.status(200).json(response);
   };
 }
