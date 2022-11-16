@@ -9,6 +9,7 @@ const userController = new UserController();
 
 router.post('/register', checkLoginInput, userController.newUser);
 router.post('/login', checkLoginInput, userController.findUser);
-router.get('/validate', authToken, (req, res) => res.status(200).json({ message: 'Valid token' }));
+
+router.get('/user', authToken, userController.getUser);
 
 export default router;

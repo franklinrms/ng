@@ -16,4 +16,8 @@ export default class MatchController {
     const response = await this.service.findUser(req.body);
     return res.status(200).json(response);
   };
+  public getUser = async (_req: Request, res: Response) => {
+    const response = await this.service.getUser(res.locals.user.username);
+    return res.status(200).json(response);
+  };
 }

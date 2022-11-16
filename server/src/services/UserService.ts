@@ -55,4 +55,12 @@ export default class UserService {
     } 
     throw new HttpException(404, 'Invalid password');
   };
+  public getUser = async (username: string) => {
+    const user = await prisma.user.findUnique({
+      where: { username },
+      include: { account: true },
+    });
+    if (!user) { throw new HttpException(404, 'User not found'); }
+    return { username: user.username, balance: user.account.balance };
+  };
 }
