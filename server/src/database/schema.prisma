@@ -25,9 +25,9 @@ model Account {
     id      String @id @default(uuid())
     balance Float  @default(100)
 
-    User       User?
-    TransferOf Transaction[] @relation("transferOf")
-    TransferTo Transaction[] @relation("transferTo")
+    user    User?
+    cashOut Transaction[] @relation("cash-out")
+    cashIn  Transaction[] @relation("cash-in")
 
     @@map("accounts")
 }
@@ -39,8 +39,8 @@ model Transaction {
     value             Float
     createdAt         DateTime @default(now())
 
-    debitedAccount  Account @relation("transferOf", fields: [debitedAccountId], references: [id], onDelete: Cascade)
-    creditedAccount Account @relation("transferTo", fields: [creditedAccountId], references: [id], onDelete: Cascade)
+    debitedAccount  Account @relation("cash-out", fields: [debitedAccountId], references: [id], onDelete: Cascade)
+    creditedAccount Account @relation("cash-in", fields: [creditedAccountId], references: [id], onDelete: Cascade)
 
     @@map("transactions")
 }
