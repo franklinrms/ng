@@ -17,7 +17,7 @@ const test = new UserService();
 // });
 router.get('/test', async (req, res) => {
   const response = await test
-    .createUser('Franklin', '1Aa2345678');
+    .createUser('franklin3', 'Abcdefgh1');
   return res.status(200).json(response);
 });
 

@@ -2,6 +2,8 @@ import md5 from 'md5';
 import HttpException from '../lib/HttpException';
 import prisma from '../database/prisma';
 import AccountService from './AccountService';
+import { encode } from '../lib/jwt';
+import IUser from '../interfaces/IUser';
 
 export default class UserService {
   private accountService: AccountService;
@@ -17,8 +19,12 @@ export default class UserService {
     return regex.test(password); 
   };
   private checkUsername = async (username: string) => {
-    const nameAlreadyRegistered = await prisma.user.findUnique({
-      where: { username },
+    const nameAlreadyRegistered = await prisma.user.findFirst({
+      where: { 
+        username: {
+          equals: username,
+          mode: 'insensitive', 
+        } },
     });
     if (nameAlreadyRegistered) {
       throw new HttpException(400, 'Username already registered');
@@ -27,12 +33,13 @@ export default class UserService {
   };
   public createUser = async (username: string, password: string) => {
     if (this.checkPassword(password) && await this.checkUsername(username)) {
-      const accountId = await this.accountService.createAccount();
-      return prisma.user.create({ data: {
+      const user:IUser = await prisma.user.create({ data: {
         username,
         password: md5(password),
-        accountId,
-      } });
+        accountId: await this.accountService.createAccount(),
+      },
+      });
+      return encode({ username: user.username, accountId: user.accountId });
     }
   };
 }
