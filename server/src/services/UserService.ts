@@ -12,6 +12,15 @@ export default class UserService {
     this.accountService = new AccountService();
   }
 
+  private getUserByUsername = async (username: string) => prisma.user
+    .findFirst({
+      where: { 
+        username: {
+          equals: username,
+          mode: 'insensitive', 
+        } },
+    });
+
   private checkPassword = (password: string) => {
     const regex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
     if (!regex.test(password)) {
@@ -20,15 +29,9 @@ export default class UserService {
     return regex.test(password); 
   };
   private checkUsername = async (username: string) => {
-    const nameAlreadyRegistered = await prisma.user.findFirst({
-      where: { 
-        username: {
-          equals: username,
-          mode: 'insensitive', 
-        } },
-    });
+    const nameAlreadyRegistered = await this.getUserByUsername(username);
     if (nameAlreadyRegistered) {
-      throw new HttpException(400, 'Username already registered');
+      throw new HttpException(409, 'Username already registered');
     }
     return true;
   };
@@ -42,5 +45,14 @@ export default class UserService {
       });
       return encode({ username: user.username, accountId: user.accountId });
     }
+  };
+  public getUser = async ({ username, password }: ILoginInput) => {
+    const user = await this.getUserByUsername(username);
+    if (!user) { throw new HttpException(404, 'User not found'); }
+
+    if (user.password === md5(password)) {
+      return encode({ username: user.username, accountId: user.accountId });
+    } 
+    throw new HttpException(404, 'Invalid password');
   };
 }

@@ -12,4 +12,8 @@ export default class MatchController {
     const response = await this.service.createUser(req.body);
     return res.status(201).json(response);
   };
+  public findUser = async (req: Request, res: Response) => {
+    const response = await this.service.getUser(req.body);
+    return res.status(200).json(response);
+  };
 }
