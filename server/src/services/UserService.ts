@@ -4,6 +4,7 @@ import prisma from '../database/prisma';
 import AccountService from './AccountService';
 import { encode } from '../lib/jwt';
 import IUser from '../interfaces/IUser';
+import ILoginInput from '../interfaces/ILoginInput';
 
 export default class UserService {
   private accountService: AccountService;
@@ -31,7 +32,7 @@ export default class UserService {
     }
     return true;
   };
-  public createUser = async (username: string, password: string) => {
+  public createUser = async ({ username, password }: ILoginInput) => {
     if (this.checkPassword(password) && await this.checkUsername(username)) {
       const user:IUser = await prisma.user.create({ data: {
         username,
