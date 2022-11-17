@@ -13,9 +13,9 @@ export default class AccountController {
       .newTransfer(res.locals.user.username, username, amount);
     return res.status(200).json(response);
   };
-  public getTransferHistory = async (_req: Request, res: Response) => {
+  public getAllTransferHistory = async (_req: Request, res: Response) => {
     const response = await this.service
-      .getTransferHistory(res.locals.user.accountId);
+      .getAllTransferHistory(res.locals.user.accountId);
     return res.status(200).json(response);
   };
 }
