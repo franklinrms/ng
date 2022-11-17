@@ -1,4 +1,5 @@
 import prisma from '../database/prisma';
+import ITransferType from '../interfaces/ITransferData';
 import HttpException from '../lib/HttpException';
 
 export default class AccountService {
@@ -51,5 +52,34 @@ export default class AccountService {
         creditedAccountId: receivingUser.accountId,
         value: amount } }),
     ]);
+  };
+
+  private getTransferHistoryByType = async (id: string, type: string) => (
+    prisma.account.findUnique({
+      where: { id },
+      select: { 
+        [type]: {
+          select: {
+            value: true,
+            createdAt: true,
+            [type === 'cashIn' ? 'debitedAccount' : 'creditedAccount']: { 
+              select: { user: { select: { username: true } } } },
+          },
+        },
+      },
+    }));
+
+  public getTransferHistory = async (id: string) => {
+    const { cashIn } = (
+      await this.getTransferHistoryByType(id, 'cashIn') as ITransferType
+    );
+
+    const { cashOut } = (
+      await this.getTransferHistoryByType(id, 'cashOut') as ITransferType
+    );
+
+    if (cashIn !== undefined && cashOut !== undefined) {
+      return [...cashIn, ...cashOut];
+    }
   };
 }
