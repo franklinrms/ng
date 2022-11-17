@@ -39,7 +39,7 @@ export default class AccountService {
     }
 
     const cashOut = sendingUser.balance - amount;
-    const cashIn = sendingUser.balance + amount;
+    const cashIn = receivingUser.balance + amount;
 
     Promise.all([
       this.updateBalance(sendingUser.accountId, cashOut),

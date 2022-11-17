@@ -1,23 +1,25 @@
 import { Router } from 'express';
-import checkLoginInput from '../middlewares/checkLoginInput';
 import UserController from '../controllers/UserController';
+import AccountController from '../controllers/AccountController';
 import authToken from '../middlewares/authToken';
-import AccountService from '../services/AccountService';
+import checkLoginInput from '../middlewares/checkLoginInput';
+import checkTransferInput from '../middlewares/checkTransferInput';
 
 const router = Router();
 
 const userController = new UserController();
-const testTransfer = new AccountService();
+const accountController = new AccountController();
 
 router.post('/register', checkLoginInput, userController.newUser);
 router.post('/login', checkLoginInput, userController.findUser);
 
 router.get('/user', authToken, userController.getUser);
 
-router.get('/transfer', authToken, async (req, res) => {
-  const test = await testTransfer
-    .newTransfer(res.locals.user.username, 'franklin4', 75.7);
-  res.status(200).json(test);
-});
+router.post(
+  '/transfer',
+  checkTransferInput,
+  authToken,
+  accountController.newTransfer,
+);
 
 export default router;
