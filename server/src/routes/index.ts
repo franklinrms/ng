@@ -15,7 +15,8 @@ router.post('/login', checkLoginInput, userController.findUser);
 
 router.get('/user', authToken, userController.getUser);
 
-router.get('/transfer', authToken, accountController.getAllTransferHistory);
+router.get('/transfer', authToken, accountController.getTransferHistory);
+
 router.post(
   '/transfer',
   checkTransferInput,

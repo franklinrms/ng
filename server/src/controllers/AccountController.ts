@@ -13,9 +13,17 @@ export default class AccountController {
       .newTransfer(res.locals.user.username, username, amount);
     return res.status(200).json(response);
   };
-  public getAllTransferHistory = async (_req: Request, res: Response) => {
+  public getTransferHistory = async (req: Request, res: Response) => {
+    const { date } = req.query;
+    const userId = res.locals.user.accountId;
+    if (date) {
+      const response = await this.service
+        .getAllTransferHistoryByDate(userId, '2022-11-17');
+      return res.status(200).json(response);
+    } 
     const response = await this.service
-      .getAllTransferHistory(res.locals.user.accountId);
+      .getAllTransferHistory(userId);
+  
     return res.status(200).json(response);
   };
 }

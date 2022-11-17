@@ -54,7 +54,7 @@ export default class AccountService {
     ]);
   };
 
-  private getTransferHistoryByType = async (id: string, type: string) => (
+  private getTransferByType = async (id: string, type: string) => (
     prisma.account.findUnique({
       where: { id },
       select: { 
@@ -68,55 +68,45 @@ export default class AccountService {
         },
       },
     }));
-  private getTransferHistoryByTypeAndDate = async (
-    id: string,
-    type: string, 
-    date:string,
-  ) => (
-    prisma.account.findUnique({
-      where: { id },
-      select: { 
-        [type]: {
-          where: { createdAt: { 
-            gte: `${date}T00:00:00.000Z`, lte: `${date}T23:59:59.000Z` } },
-          select: {
-            value: true,
-            createdAt: true,
-            [type === 'cashIn' ? 'debitedAccount' : 'creditedAccount']: { 
-              select: { user: { select: { username: true } } } },
-          },
-        },
-      },
-    }));
-
   public getAllTransferHistory = async (id: string) => {
     const { cashIn } = (
-      await this.getTransferHistoryByType(id, 'cashIn') as ITransferType
+      await this.getTransferByType(id, 'cashIn') as ITransferType
     );
-  
+
     const { cashOut } = (
-      await this.getTransferHistoryByType(id, 'cashOut') as ITransferType
+      await this.getTransferByType(id, 'cashOut') as ITransferType
     );
-  
+    
     if (cashIn !== undefined && cashOut !== undefined) {
       return [...cashIn, ...cashOut];
     }
   };
 
+  private getTransferByTypeAndDate = async (
+    id: string, 
+    type: string, 
+    date:string,
+  ) => (prisma.account.findUnique({
+    where: { id },
+    select: { 
+      [type]: {
+        where: { createdAt: { 
+          gte: `${date}T00:00:00.000Z`, lte: `${date}T23:59:59.000Z` } },
+        select: {
+          value: true,
+          createdAt: true,
+          [type === 'cashIn' ? 'debitedAccount' : 'creditedAccount']: { 
+            select: { user: { select: { username: true } } } },
+        },
+      } },
+  }));
+
   public getAllTransferHistoryByDate = async (id: string, date:string) => {
     const { cashIn } = (
-      await this.getTransferHistoryByTypeAndDate(
-        id,
-        'cashIn',
-        date,
-      ) as ITransferType);
+      await this.getTransferByTypeAndDate(id, 'cashIn', date) as ITransferType);
   
     const { cashOut } = (
-      await this.getTransferHistoryByTypeAndDate(
-        id,
-        'cashOut',
-        date,
-      ) as ITransferType
+      await this.getTransferByTypeAndDate(id, 'cashOut', date) as ITransferType
     );
   
     if (cashIn !== undefined && cashOut !== undefined) {
