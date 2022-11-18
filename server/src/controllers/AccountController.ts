@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { TransferType } from '../interfaces/ITransferData';
 import AccountService from '../services/AccountService';
 
 export default class AccountController {
@@ -23,6 +24,25 @@ export default class AccountController {
     } 
     const response = await this.service
       .getAllTransferHistory(userId);
+  
+    return res.status(200).json(response);
+  };
+  public getTransferHistoryByType = async (req: Request, res: Response) => {
+    const userId = res.locals.user.accountId;
+    const { type } = req.params;
+    const { date } = req.query;
+    
+    if (date) {
+      const response = await this.service
+        .getTransferHistoryByTypeAndDate(
+          userId,
+          type as TransferType,
+          date as string,
+        );
+      return res.status(200).json(response);
+    } 
+    const response = await this.service
+      .getTransferHistoryByType(userId, type as TransferType);
   
     return res.status(200).json(response);
   };

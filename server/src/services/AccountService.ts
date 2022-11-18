@@ -1,5 +1,5 @@
 import prisma from '../database/prisma';
-import ITransferType from '../interfaces/ITransferData';
+import ITransferType, { TransferType } from '../interfaces/ITransferData';
 import HttpException from '../lib/HttpException';
 
 export default class AccountService {
@@ -112,5 +112,18 @@ export default class AccountService {
     if (cashIn !== undefined && cashOut !== undefined) {
       return [...cashIn, ...cashOut];
     }
+  };
+  public getTransferHistoryByType = async (id: string, type:TransferType) => {
+    const data = await this.getTransferByType(id, type) as ITransferType;
+    return data[type];
+  };
+  public getTransferHistoryByTypeAndDate = async (
+    id: string,
+    type:TransferType, 
+    date:string,
+  ) => {
+    const data = await this
+      .getTransferByTypeAndDate(id, type, date) as ITransferType;
+    return data[type];
   };
 }

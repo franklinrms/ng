@@ -16,3 +16,4 @@ export default interface ITransferType {
   cashIn?: ITransferData[] | [];
   cashOut?: ITransferData[] | [];
 }
+export type TransferType = 'cashIn' | 'cashOut';

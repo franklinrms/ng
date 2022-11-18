@@ -17,6 +17,12 @@ router.get('/user', authToken, userController.getUser);
 
 router.get('/transfer', authToken, accountController.getTransferHistory);
 
+router.get(
+  '/transfer/:type',
+  authToken,
+  accountController.getTransferHistoryByType,
+);
+
 router.post(
   '/transfer',
   checkTransferInput,
