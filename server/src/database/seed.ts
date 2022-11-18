@@ -1,33 +1,25 @@
-// import prisma from './prisma';
+import prisma from './prisma';
+import AccountService from '../services/AccountService';
+import UserService from '../services/UserService';
 
-// const newUser = async (username: string, password: string) => {
-//   const { id } = await prisma.account.create({ data: {} });
-//   return {
-//     username,
-//     password,
-//     accountId: id,
-//   };
-// };
-// const seedDatabase = async () => {
-//   await prisma.user.createMany(
-//     { data: [
-//       await newUser('userA', 'A1password'),
-//       await newUser('userB', 'B1password'),
-//       await newUser('userC', 'C1password')] },
-//   );
-//   const users = await prisma.user.findMany();
-//   await prisma.transaction.createMany(
-//     { data: [
-//       { debitedAccountId: users[0].accountId,
-//         creditedAccountId: users[1].accountId,
-//         value: 55.5 },
-//       { debitedAccountId: users[1].accountId,
-//         creditedAccountId: users[2].accountId,
-//         value: 55.5 },
-//       { debitedAccountId: users[2].accountId,
-//         creditedAccountId: users[0].accountId,
-//         value: 55.5 },
-//     ] },
-//   );
-// };
-// seedDatabase();
+const { newTransfer } = new AccountService();
+const { createUser } = new UserService();
+
+const seedDatabase = async () => {
+  await createUser({ username: 'userA', password: 'A1password' });
+  await createUser({ username: 'userB', password: 'B1password' });
+  await createUser({ username: 'userC', password: 'C1password' });
+
+  const users = await prisma.user.findMany();
+
+  // verificar erro da atualização do saldo
+
+//   await newTransfer(users[0].username, users[1].username, 10);
+//   await newTransfer(users[1].username, users[2].username, 10);
+//   await newTransfer(users[2].username, users[0].username, 10);
+//   await newTransfer(users[2].username, users[1].username, 10);
+//   await newTransfer(users[2].username, users[0].username, 10);
+//   await newTransfer(users[0].username, users[1].username, 10);
+};
+
+seedDatabase();
