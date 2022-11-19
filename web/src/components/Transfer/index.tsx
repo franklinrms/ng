@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
 
-export default function Transfer({ token }: { token: string }) {
+export default function Transfer() {
   const [username, setUsername] = useState("");
   const [amount, setAmount] = useState(0.0);
   const [deniedTransfer, setDeniedTransfer] = useState(false);
@@ -10,7 +10,7 @@ export default function Transfer({ token }: { token: string }) {
   const [isSuccessfulTransfer, setIsSuccessfulTransfer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const { user, getUser } = useContext(UserContext);
+  const { user, getUser, token } = useContext(UserContext);
 
   const onSubmitTransfer = async () => {
     setIsLoading(true);

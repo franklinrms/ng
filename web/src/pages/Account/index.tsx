@@ -5,7 +5,7 @@ import UserContext from "../../context/UserContext";
 
 export default function Account() {
   const [onNewTransfer, setOnNewTransfer] = useState(false);
-  const { user, token } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
   const goLogin = () => navigate("/login");
@@ -51,7 +51,7 @@ export default function Account() {
         </div>
       </div>
       <div>
-        <div>{onNewTransfer && <Transfer token={token} />}</div>
+        <div>{onNewTransfer && <Transfer />}</div>
         <h3>Extrato</h3>
       </div>
     </div>
