@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Extract from "../../components/Extract";
 import Transfer from "../../components/Transfer";
 import UserContext from "../../context/UserContext";
 
@@ -53,6 +54,7 @@ export default function Account() {
       <div>
         <div>{onNewTransfer && <Transfer />}</div>
         <h3>Extrato</h3>
+        <Extract />
       </div>
     </div>
   );

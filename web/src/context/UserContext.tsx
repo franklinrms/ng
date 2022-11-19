@@ -31,7 +31,7 @@ function UserContextProvider({ children }: UserProviderProps) {
   const navigate = useNavigate();
   const goLogin = () => navigate("/login");
 
-  const NGtoken = localStorage.getItem("NGtoken");
+  const NGtoken = localStorage.getItem("NGtoken") || "";
   const token = JSON.parse(NGtoken || "");
 
   const getUser = async () => {
