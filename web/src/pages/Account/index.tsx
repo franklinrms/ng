@@ -1,36 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Transfer from "../../components/Transfer";
-import api from "../../lib/api";
+import UserContext from "../../context/UserContext";
 
 export default function Account() {
-  const [user, setUser] = useState({ username: "", balance: 0 });
   const [onNewTransfer, setOnNewTransfer] = useState(false);
+  const { user, token } = useContext(UserContext);
 
   const navigate = useNavigate();
   const goLogin = () => navigate("/login");
-
-  const NGtoken = localStorage.getItem("NGtoken");
-  const token = JSON.parse(NGtoken || "");
-
-  const getUser = async () => {
-    try {
-      const { data } = await api.get("/user", {
-        headers: { authorization: token },
-      });
-      setUser(data);
-    } catch (error) {
-      goLogin();
-    }
-  };
-
-  useEffect(() => {
-    if (!NGtoken) {
-      goLogin();
-    } else {
-      getUser();
-    }
-  });
 
   const logout = () => {
     localStorage.clear();

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
 
 export default function Transfer({ token }: { token: string }) {
@@ -9,7 +10,7 @@ export default function Transfer({ token }: { token: string }) {
   const [isSuccessfulTransfer, setIsSuccessfulTransfer] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const balance = 3;
+  const { user, getUser } = useContext(UserContext);
 
   const onSubmitTransfer = async () => {
     setIsLoading(true);
@@ -19,16 +20,17 @@ export default function Transfer({ token }: { token: string }) {
         { username, amount },
         { headers: { authorization: token } }
       );
-      setIsLoading(false);
       setDeniedTransfer(false);
+      await getUser();
       setIsSuccessfulTransfer(true);
     } catch (error) {
       setDeniedTransfer(true);
     }
+    setIsLoading(false);
   };
 
   const enableButton = () => {
-    if (amount > balance || isLoading) {
+    if (amount > user.balance || isLoading) {
       setIsButtonDisabled(true);
     } else {
       setIsButtonDisabled(false);
@@ -55,6 +57,7 @@ export default function Transfer({ token }: { token: string }) {
             <input
               type="text"
               placeholder="usuário"
+              minLength={3}
               required
               onChange={({ target }) => setUsername(target.value)}
             />
@@ -62,7 +65,7 @@ export default function Transfer({ token }: { token: string }) {
               type="number"
               placeholder="0,00"
               required
-              min="1"
+              min="1,00"
               step="0.01"
               onChange={({ target }) => setAmount(Number(target.value))}
             />
@@ -72,8 +75,8 @@ export default function Transfer({ token }: { token: string }) {
           </form>
         )}
       </div>
-      {amount > balance && <span>Saldo insuficiente</span>}
-      {deniedTransfer && <p>usuário não encontrado</p>}
+      {amount > user.balance && <span>Saldo insuficiente</span>}
+      {deniedTransfer && <span>usuário não encontrado</span>}
     </div>
   );
 }
