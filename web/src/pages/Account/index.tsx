@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Transfer from "../../components/Transfer";
 import api from "../../lib/api";
 
 export default function Account() {
   const [user, setUser] = useState({ username: "", balance: 0 });
   const [onNewTransfer, setOnNewTransfer] = useState(false);
+
   const navigate = useNavigate();
   const goLogin = () => navigate("/login");
 
-  const getUser = async (token: string) => {
+  const NGtoken = localStorage.getItem("NGtoken");
+  const token = JSON.parse(NGtoken || "");
+
+  const getUser = async () => {
     try {
       const { data } = await api.get("/user", {
         headers: { authorization: token },
@@ -20,14 +25,12 @@ export default function Account() {
   };
 
   useEffect(() => {
-    const NGtoken = localStorage.getItem("NGtoken");
     if (!NGtoken) {
       goLogin();
     } else {
-      const token = JSON.parse(NGtoken || "");
-      getUser(token);
+      getUser();
     }
-  }, []);
+  });
 
   const logout = () => {
     localStorage.clear();
@@ -70,7 +73,7 @@ export default function Account() {
         </div>
       </div>
       <div>
-        <div>{onNewTransfer && <h5>transferir</h5>}</div>
+        <div>{onNewTransfer && <Transfer token={token} />}</div>
         <h3>Extrato</h3>
       </div>
     </div>
