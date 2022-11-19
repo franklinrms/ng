@@ -31,8 +31,7 @@ function UserContextProvider({ children }: UserProviderProps) {
   const navigate = useNavigate();
   const goLogin = () => navigate("/login");
 
-  const NGtoken = localStorage.getItem("NGtoken") || "";
-  const token = JSON.parse(NGtoken || "");
+  const token = localStorage.getItem("NGtoken") || "";
 
   const getUser = async () => {
     try {
@@ -46,7 +45,7 @@ function UserContextProvider({ children }: UserProviderProps) {
   };
 
   useEffect(() => {
-    if (!NGtoken) {
+    if (!token) {
       goLogin();
     } else {
       getUser();
