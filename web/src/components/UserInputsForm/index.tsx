@@ -37,13 +37,13 @@ export default function UserInputsForm({
     >
       <input
         type="text"
-        placeholder="username"
+        placeholder="usuário"
         onChange={({ target }) => setUsername(target.value)}
         required
       />
       <input
         type="password"
-        placeholder="password"
+        placeholder="senha"
         onChange={({ target }) => setPassword(target.value)}
         required
       />
