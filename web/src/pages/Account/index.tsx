@@ -4,6 +4,7 @@ import { BiTransferAlt } from "react-icons/bi";
 import Extract from "../../components/Extract";
 import Transfer from "../../components/Transfer";
 import UserContext from "../../context/UserContext";
+import logo from "../../assets/logo_ng_cash.gif";
 import * as S from "./style";
 
 export default function Account() {
@@ -21,7 +22,7 @@ export default function Account() {
   return (
     <S.Container>
       <S.Header>
-        <h2>Logo</h2>
+        <img src={logo} alt="Logo" />
         <div>
           <p>{`Olá,  ${user.username}`}</p>
           <button type="button" onClick={logout}>

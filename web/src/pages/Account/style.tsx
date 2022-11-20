@@ -15,6 +15,10 @@ export const Header = styled.header`
   margin-bottom: 30px;
   font-size: 18px;
 
+  img {
+    width: 100px;
+  }
+
   div {
     display: flex;
     align-items: center;
