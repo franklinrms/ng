@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserInputsForm from "../../components/UserInputsForm";
 import api from "../../lib/api";
+import * as S from "./style";
 
 export default function Login() {
   const [deniedUser, setDeniedUser] = useState(false);
@@ -17,10 +18,13 @@ export default function Login() {
     }
   };
   return (
-    <div>
-      <h2>Acessar Conta Digital</h2>
-      <UserInputsForm registrationForm={false} onSubmitForm={getUser} />
-      {deniedUser && <p>usuário ou senha inválidos</p>}
-    </div>
+    <S.Container>
+      <S.Pic />
+      <div className="inner">
+        <h2>Acessar Conta Digital</h2>
+        <UserInputsForm registrationForm={false} onSubmitForm={getUser} />
+        {deniedUser && <p>usuário ou senha inválidos</p>}
+      </div>
+    </S.Container>
   );
 }

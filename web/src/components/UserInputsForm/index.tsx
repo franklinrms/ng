@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Form from "./style";
 
 interface UserInputsFormProps {
   registrationForm: boolean;
@@ -29,7 +30,7 @@ export default function UserInputsForm({
   }, [username, password]);
 
   return (
-    <form
+    <Form
       onSubmit={(event) => {
         event.preventDefault();
         onSubmitForm(username, password);
@@ -50,6 +51,6 @@ export default function UserInputsForm({
       <button type="submit" disabled={isButtonDisabled}>
         {registrationForm ? "Cadastrar" : "Acessar"}
       </button>
-    </form>
+    </Form>
   );
 }
