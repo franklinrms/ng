@@ -1,13 +1,14 @@
 const theme = {
   colors: {
-    brand: "#3EF7FA",
-    brand_secondary: "#3EFA9F",
+    brand: "#4675C0",
+    brand_secondary: "#8FC8EB",
     background: "#000000",
 
     red: "#FA413E",
     green: "#00FF00",
 
     surface_primary: "#09090A",
+    surface_secondary: "#18181B",
 
     text_primary: "#D6D6D6",
     text_secondary: "#B6BBC7",

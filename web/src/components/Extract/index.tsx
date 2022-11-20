@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { BsCalendar3Week, BsCashCoin } from "react-icons/bs";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
 
@@ -69,7 +70,7 @@ export default function Extract() {
           type="button"
           onClick={() => setIsFilterByDate(!isFilterByDate)}
         >
-          Data
+          <BsCalendar3Week />
         </button>
 
         <button
@@ -100,6 +101,9 @@ export default function Extract() {
           <tbody>
             {transactions.map((transaction: ITransferData) => (
               <tr role="row" key={transaction.createdAt}>
+                <td>
+                  <BsCashCoin />
+                </td>
                 <td>
                   <p>
                     {transaction.debitedAccount &&

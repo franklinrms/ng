@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BiTransferAlt } from "react-icons/bi";
 import Extract from "../../components/Extract";
 import Transfer from "../../components/Transfer";
 import UserContext from "../../context/UserContext";
@@ -20,7 +21,7 @@ export default function Account() {
   return (
     <S.Container>
       <S.Header>
-        <h1>Logo</h1>
+        <h2>Logo</h2>
         <div>
           <p>{`Olá,  ${user.username}`}</p>
           <button type="button" onClick={logout}>
@@ -28,24 +29,22 @@ export default function Account() {
           </button>
         </div>
       </S.Header>
-      <div>
-        <div>
+      <S.Wrapper>
+        <div className="balance">
           <p>Saldo disponível</p>
-          <p>{`R$ ${user.balance.toFixed(2).replace(".", ",")}`}</p>
+          <p className="value">{`R$ ${user.balance
+            .toFixed(2)
+            .replace(".", ",")}`}</p>
         </div>
-        <div>
-          <button
-            type="button"
-            onClick={() => setOnNewTransfer(!onNewTransfer)}
-          >
-            Transferir
-          </button>
-        </div>
-      </div>
+        <button type="button" onClick={() => setOnNewTransfer(!onNewTransfer)}>
+          <BiTransferAlt size={28} />
+          <span>Transferir </span>
+        </button>
+      </S.Wrapper>
       <div>
         <div>{onNewTransfer && <Transfer />}</div>
         <h3>Extrato</h3>
-        {/* <Extract /> */}
+        <Extract />
       </div>
     </S.Container>
   );
