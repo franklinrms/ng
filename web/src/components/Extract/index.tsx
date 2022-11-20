@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { BsDownload, BsUpload } from "react-icons/bs";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
+import Loading from "../Loading";
 import * as S from "./style";
 
 interface IUser {
@@ -91,7 +92,7 @@ export default function Extract() {
         </div>
       </div>
       {isLoading ? (
-        <p>Carregando...</p>
+        <Loading />
       ) : (
         <S.WrapperTable>
           <tbody>
