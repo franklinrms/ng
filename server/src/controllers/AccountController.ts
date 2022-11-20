@@ -19,7 +19,7 @@ export default class AccountController {
     const userId = res.locals.user.accountId;
     if (date) {
       const response = await this.service
-        .getAllTransferHistoryByDate(userId, '2022-11-17');
+        .getAllTransferHistoryByDate(userId, date as string);
       return res.status(200).json(response);
     } 
     const response = await this.service
