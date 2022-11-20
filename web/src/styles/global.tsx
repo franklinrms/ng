@@ -36,6 +36,9 @@ const GlobalStyles = createGlobalStyle`
         cursor: default;
         }
     }
+    input {
+        outline: none;
+    }
     a {
         text-decoration: none;
     }

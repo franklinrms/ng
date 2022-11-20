@@ -43,20 +43,21 @@ export const Wrapper = styled.div`
 
   button {
     padding: 50px;
-    /* background: ${theme.colors.surface_primary}; */
     border-radius: ${theme.borderRadius.lg};
     background: transparent;
     width: 40%;
-    color: ${theme.colors.text_on_brand_color};
-    border: 2px solid ${theme.colors.stroke};
+    color: ${theme.colors.brand};
+    border: 2px solid ${theme.colors.brand};
     font-size: 18px;
     display: flex;
     gap: 20px;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease-in-out;
+    letter-spacing: 2px;
     &:hover {
-      background: ${theme.colors.surface_primary};
+      color: ${theme.colors.text_on_brand_color};
+      border: 2px solid ${theme.colors.text_on_brand_color};
       transform: scale(1.2);
     }
   }

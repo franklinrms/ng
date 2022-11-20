@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BsCalendar3Week, BsCashCoin } from "react-icons/bs";
+import { BsCalendar3Week, BsDownload, BsUpload } from "react-icons/bs";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
+import * as S from "./style";
 
 interface IUser {
   user: {
@@ -64,7 +65,8 @@ export default function Extract() {
     getTransactions();
   }, [user.balance, selectedDate, isFilterByCashIn, isFilterByCashOut]);
   return (
-    <div>
+    <S.Container>
+      <h3>Extrato</h3>
       <div>
         <button
           type="button"
@@ -97,28 +99,32 @@ export default function Extract() {
       {isLoading ? (
         <p>Carregando...</p>
       ) : (
-        <table>
+        <S.WrapperTable>
           <tbody>
             {transactions.map((transaction: ITransferData) => (
               <tr role="row" key={transaction.createdAt}>
                 <td>
-                  <BsCashCoin />
-                </td>
-                <td>
+                  <span>
+                    {transaction.debitedAccount ? <BsDownload /> : <BsUpload />}
+                  </span>
                   <p>
                     {transaction.debitedAccount &&
                       transaction.debitedAccount.user.username}
-                  </p>
-                  <p>
                     {transaction.creditedAccount &&
                       transaction.creditedAccount.user.username}
                   </p>
                 </td>
                 <td>{formattedDate(transaction.createdAt)}</td>
-                <td
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <span>{transaction.debitedAccount ? "+" : "-"}</span>
+                <td>
+                  <span
+                    className={
+                      transaction.debitedAccount
+                        ? "debitedAccount"
+                        : "creditedAccount"
+                    }
+                  >
+                    {transaction.debitedAccount ? "+" : "-"}
+                  </span>
                   <p>{`R$ ${transaction.value
                     .toFixed(2)
                     .replace(".", ",")}`}</p>
@@ -126,8 +132,8 @@ export default function Extract() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </S.WrapperTable>
       )}
-    </div>
+    </S.Container>
   );
 }

@@ -43,7 +43,6 @@ export default function Account() {
       </S.Wrapper>
       <div>
         <div>{onNewTransfer && <Transfer />}</div>
-        <h3>Extrato</h3>
         <Extract />
       </div>
     </S.Container>
