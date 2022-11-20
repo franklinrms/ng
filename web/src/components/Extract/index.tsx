@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BsCalendar3Week, BsDownload, BsUpload } from "react-icons/bs";
+import { BsDownload, BsUpload } from "react-icons/bs";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
 import * as S from "./style";
@@ -66,35 +66,29 @@ export default function Extract() {
   }, [user.balance, selectedDate, isFilterByCashIn, isFilterByCashOut]);
   return (
     <S.Container>
-      <h3>Extrato</h3>
-      <div>
-        <button
-          type="button"
-          onClick={() => setIsFilterByDate(!isFilterByDate)}
-        >
-          <BsCalendar3Week />
-        </button>
-
-        <button
-          onClick={() => setIsFilterByCashIn(!isFilterByCashIn)}
-          type="button"
-        >
-          Entrada
-        </button>
-        <button
-          onClick={() => setIsFilterByCashOut(!isFilterByCashOut)}
-          type="button"
-        >
-          Saida
-        </button>
-      </div>
-      <div>
-        {isFilterByDate && (
+      <div className="containerFilters">
+        <h3>Extrato</h3>
+        <div className="wrapperFilters">
           <input
-            onChange={({ target }) => setSelectedDate(target.value)}
             type="date"
+            onChange={({ target }) => setSelectedDate(target.value)}
+            onClick={() => setIsFilterByDate(!isFilterByDate)}
           />
-        )}
+          <S.FilterButton
+            onClick={() => setIsFilterByCashIn(!isFilterByCashIn)}
+            type="button"
+            active={isFilterByCashIn}
+          >
+            Entrada
+          </S.FilterButton>
+          <S.FilterButton
+            active={isFilterByCashOut}
+            onClick={() => setIsFilterByCashOut(!isFilterByCashOut)}
+            type="button"
+          >
+            Saida
+          </S.FilterButton>
+        </div>
       </div>
       {isLoading ? (
         <p>Carregando...</p>

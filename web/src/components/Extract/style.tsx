@@ -7,6 +7,53 @@ export const Container = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+
+  .containerFilters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 0;
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    @media (max-width: ${theme.breakpoints.mobile}) {
+      flex-direction: column;
+      h3 {
+        margin-bottom: 40px;
+      }
+    }
+  }
+  .wrapperFilters {
+    display: flex;
+    gap: 20px;
+
+    input[type="date"] {
+      border: 2px solid ${theme.colors.surface_secondary};
+      padding: 15px;
+      background-color: ${theme.colors.background};
+      border-radius: ${theme.borderRadius.lg};
+      color: ${theme.colors.text_primary};
+      ::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        background-color: ${theme.colors.text_primary};
+        padding: 5px;
+        border-radius: ${theme.borderRadius.sm};
+      }
+    }
+  }
+`;
+
+export const FilterButton = styled.button<{ active: boolean }>`
+  background: ${({ active }) =>
+    active ? theme.colors.brand : theme.colors.background};
+  padding: 15px 20px;
+  font-weight: bold;
+  color: ${({ active }) =>
+    active ? theme.colors.text_on_brand_color : theme.colors.text_primary};
+  border-radius: ${theme.borderRadius.lg};
+  border: 2px solid ${theme.colors.surface_secondary};
 `;
 
 export const WrapperTable = styled.div`
