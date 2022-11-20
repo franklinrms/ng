@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import api from "../../lib/api";
+import Loading from "../Loading";
+import * as S from "./style";
 
 export default function Transfer() {
   const [username, setUsername] = useState("");
@@ -39,12 +41,12 @@ export default function Transfer() {
 
   useEffect(() => {
     enableButton();
-  }, [amount]);
+  }, [amount, isLoading]);
 
   return (
-    <div>
+    <S.Container>
       <h3>Transferir</h3>
-      <div>
+      <S.WrapperTransfer>
         {isSuccessfulTransfer ? (
           <p>Transferência realizada com sucesso!</p>
         ) : (
@@ -65,18 +67,18 @@ export default function Transfer() {
               type="number"
               placeholder="0,00"
               required
-              min="1,00"
+              min="1"
               step="0.01"
               onChange={({ target }) => setAmount(Number(target.value))}
             />
             <button disabled={isButtonDisabled} type="submit">
-              Enviar
+              {isButtonDisabled ? <Loading /> : "Enviar"}
             </button>
           </form>
         )}
-      </div>
+      </S.WrapperTransfer>
       {amount > user.balance && <span>Saldo insuficiente</span>}
-      {deniedTransfer && <span>usuário não encontrado</span>}
-    </div>
+      {deniedTransfer && <span>Usuário não encontrado</span>}
+    </S.Container>
   );
 }
