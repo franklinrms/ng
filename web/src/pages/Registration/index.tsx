@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserInputsForm from "../../components/UserInputsForm";
 import api from "../../lib/api";
+import * as S from "./style";
 
 export default function Registration() {
   const [deniedUser, setDeniedUser] = useState(false);
@@ -17,10 +18,13 @@ export default function Registration() {
     }
   };
   return (
-    <div>
-      <h2>Abra agora sua Conta Digital</h2>
-      <UserInputsForm registrationForm onSubmitForm={createUser} />
-      {deniedUser && <p>Usuário já existe</p>}
-    </div>
+    <S.Container>
+      <div className="inner">
+        <h2>Abra agora sua Conta Digital</h2>
+        <UserInputsForm registrationForm onSubmitForm={createUser} />
+        {deniedUser && <p>Usuário já existe</p>}
+      </div>
+      <S.Pic />
+    </S.Container>
   );
 }
