@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Extract from "../../components/Extract";
 import Transfer from "../../components/Transfer";
 import UserContext from "../../context/UserContext";
+import * as S from "./style";
 
 export default function Account() {
   const [onNewTransfer, setOnNewTransfer] = useState(false);
@@ -17,27 +18,17 @@ export default function Account() {
   };
 
   return (
-    <div>
-      <header
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-around",
-        }}
-      >
+    <S.Container>
+      <S.Header>
         <h1>Logo</h1>
-        <p>{`Olá, ${user.username}`}</p>
-        <button type="button" onClick={logout}>
-          Sair
-        </button>
-      </header>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-around",
-        }}
-      >
+        <div>
+          <p>{`Olá,  ${user.username}`}</p>
+          <button type="button" onClick={logout}>
+            Sair
+          </button>
+        </div>
+      </S.Header>
+      <div>
         <div>
           <p>Saldo disponível</p>
           <p>{`R$ ${user.balance.toFixed(2).replace(".", ",")}`}</p>
@@ -54,8 +45,8 @@ export default function Account() {
       <div>
         <div>{onNewTransfer && <Transfer />}</div>
         <h3>Extrato</h3>
-        <Extract />
+        {/* <Extract /> */}
       </div>
-    </div>
+    </S.Container>
   );
 }
