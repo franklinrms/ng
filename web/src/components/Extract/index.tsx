@@ -41,13 +41,15 @@ export default function Extract() {
 
   const getUrl = () => {
     const urls = {
-      cashIn: "/cashIn/",
-      cashOut: "/cashOut/",
+      cashIn: "/cashIn",
+      cashOut: "/cashOut",
       date: `?date=${selectedDate}`,
     };
-    if (isFilterByDate) return urls.date;
-    if (isFilterByCashIn) return urls.cashIn;
-    if (isFilterByCashOut) return urls.cashOut;
+    if (isFilterByDate && !isFilterByCashIn && !isFilterByCashOut) {
+      return urls.date;
+    }
+    if (isFilterByCashIn && !isFilterByDate) return urls.cashIn;
+    if (isFilterByCashOut && !isFilterByDate) return urls.cashOut;
     if (isFilterByCashIn && isFilterByDate) return `${urls.cashIn}${urls.date}`;
     if (isFilterByCashOut && isFilterByDate) {
       return `${urls.cashOut}${urls.date}`;
@@ -73,7 +75,7 @@ export default function Extract() {
           <input
             type="date"
             onChange={({ target }) => setSelectedDate(target.value)}
-            onClick={() => setIsFilterByDate(!isFilterByDate)}
+            onClick={() => setIsFilterByDate(true)}
           />
           <S.FilterButton
             onClick={() => setIsFilterByCashIn(!isFilterByCashIn)}
