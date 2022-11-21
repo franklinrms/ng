@@ -1,0 +1,16 @@
+{
+    "name": "desafio-tecnico-ng",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+      "compose:up": "docker-compose up -d --build"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/franklinrms/ng/issues"
+    },
+    "homepage": "https://github.com/franklinrms/ng#readme",
+    "devDependencies": {
+    }
+  }

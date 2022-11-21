@@ -4,7 +4,11 @@
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
-    "start": "node dist/src/index.js",
+    "start": "ts-node ./src/index.ts",
+    "build": "tsc",
+    "db:reset": "npx prisma migrate reset --force --preview-feature",
+    "generate": "npx prisma generate",
+    "studio": "npx prisma studio",
     "dev": "nodemon --watch \"./src/**\" ./src/index.ts",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "jest"
