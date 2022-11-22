@@ -81,6 +81,10 @@ Você pode acessar o projeto aqui: [deploy link](https://www.ng-franklin.cf/).
 ```bash
     npm run compose:up
 ``` 
+ou 
+```bash
+    docker-compose up -d --build
+``` 
 
 <details>
   <summary>Sem Docker</summary>

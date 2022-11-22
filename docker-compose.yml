@@ -22,14 +22,13 @@ services:
     ports:
       - 3030:3030
     working_dir: /app-backend
-    command: npm run dev
     volumes:
       - ./server/src:/app-backend/src
     depends_on:
       db:
         condition: service_healthy
     environment:
-      - APP_PORT=3030
+      - PORT=3030
       - JWT_SECRET=jwt_secret
       - DATABASE_URL=postgres://postgres:dev@db:5432/ng
     healthcheck:
