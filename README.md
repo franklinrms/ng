@@ -98,15 +98,11 @@ Você deverá configurar as variáveis de ambiente em um arquivo ``.env``
 
 >`env.example`
   ```env
-    APP_PORT=3001
-    DATABASE_URL=postgres://postgres:SENHA@localhost:5432/ng
+    PORT=3001
+    DATABASE_URL=postgres://postgres:dev@localhost:5432/ng
     JWT_SECRET=secret
   ```
- - Para gerar as tabelas:
-   ```bash
-      npm run db:reset
-    ``` 
-  
+   
  - Para executar a api:
      ```bash
       npm start
